@@ -33,7 +33,7 @@ pipeline {
         stage('deployment') {   
             steps {
                 echo 'Hello, tomcat'
-                deploy adapters: [tomcat9(path: '', url: 'http://54.67.88.122:9090')], contextPath: '/home/centos/apache-tomcat-7.0.94/webapps', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://54.67.88.122:9090')], contextPath: null, war: '**/*.war'
             }
         }
     }
