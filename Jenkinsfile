@@ -28,12 +28,18 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-
+/myrepo:latest
         stage('build image') {   
             steps {
                 echo 'Hello, docker'
-                sh 'chmod +x ecr-login.sh'
-                sh './ecr-login.sh'
+                docker.withRegistry("https://164566612831.dkr.ecr.us-west-1.amazonaws.com", "ecr:us-east-1:ecrlogin") {
+                #docker.image("your-image-name").push()
+                docker build -t myrepo .
+                docker tag myrepo:latest 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:latest
+                docker tag myrepo:latest 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:1.0
+                docker push 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:latest
+                docker push 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:1.0
+                 }
             }
         }
 
