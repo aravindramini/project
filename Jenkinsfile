@@ -47,8 +47,13 @@ pipeline {
 
         stage('deployment') {   
             steps {
-                echo 'Hello, kubernetes'
-                sh 'kubectl apply -f deployment.yml'
+                script{
+                withCredentials([kubeconfigFile(credentialsId: 'kubecred', variable: 'KUBECONFIG')]) {
+                                    echo 'Hello, kubernetes'
+                                    sh 'kubectl apply -f deployment.yml'
+                }
+                }
+
              }
         }
     }
