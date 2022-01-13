@@ -32,7 +32,7 @@ pipeline {
             steps {
                 echo 'Hello, docker'
                 script{
-                docker.withRegistry("https://164566612831.dkr.ecr.us-west-1.amazonaws.com", "ecr:us-east-1:ecrlogin") {
+                docker.withRegistry("https://164566612831.dkr.ecr.us-west-1.amazonaws.com", "ecr:us-west-1:ecrlogin") {
                  sh '''
                 docker build -t myrepo .
                 docker tag myrepo:latest 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:latest
