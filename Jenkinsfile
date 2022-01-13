@@ -10,7 +10,7 @@ pipeline {
         stage('sonar test') {
             steps {
                 echo 'Hello, sonar'
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://54.67.88.122:9000 -Dsonar.login=97206df986acf7a1775f3924d0481b844e472ee5'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://204.236.136.89:9000 -Dsonar.login=sonar'
 
             }
         }
@@ -30,11 +30,25 @@ pipeline {
             }
         }
 
+        stage('build image') {   
+            steps {
+                echo 'Hello, docker'
+                sh '''
+                aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 164566612831.dkr.ecr.us-west-1.amazonaws.com
+                docker build -t myrepo .
+                docker tag myrepo:latest 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:latest
+                docker tag myrepo:latest 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:1.0
+                docker push 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:latest
+                docker push 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:1.0
+                '''
+            }
+        }
+
         stage('deployment') {   
             steps {
-                echo 'Hello, tomcat'
-                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://54.67.88.122:9090')], contextPath: null, war: '**/*.war'
-            }
+                echo 'Hello, kubernetes'
+                sh 'kubectl apply -f deployment.yml'
+             }
         }
     }
 }
