@@ -10,7 +10,7 @@ pipeline {
         stage('sonar test') {
             steps {
                 echo 'Hello, sonar'
-                sh 'mvn sonar:sonar -Dsonar.host.url=http://204.236.136.89:9000 -Dsonar.login=sonar'
+                sh 'mvn sonar:sonar -Dsonar.host.url=http://204.236.136.89:9000 -Dsonar.login=d85ee6e316af83e62bace794ea8e2758d97a70f8'
             }
         }
 
