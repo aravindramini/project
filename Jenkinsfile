@@ -28,7 +28,6 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-/myrepo:latest
         stage('build image') {   
             steps {
                 echo 'Hello, docker'
