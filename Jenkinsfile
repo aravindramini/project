@@ -11,7 +11,6 @@ pipeline {
             steps {
                 echo 'Hello, sonar'
                 sh 'mvn sonar:sonar -Dsonar.host.url=http://204.236.136.89:9000 -Dsonar.login=sonar'
-
             }
         }
 
