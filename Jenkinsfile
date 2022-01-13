@@ -31,6 +31,7 @@ pipeline {
         stage('build image') {   
             steps {
                 echo 'Hello, docker'
+                script{
                 docker.withRegistry("https://164566612831.dkr.ecr.us-west-1.amazonaws.com", "ecr:us-east-1:ecrlogin") {
                  sh '''
                 docker build -t myrepo .
@@ -40,6 +41,7 @@ pipeline {
                 docker push 164566612831.dkr.ecr.us-west-1.amazonaws.com/myrepo:1.0
                 '''
                  }
+                }
             }
         }
 
